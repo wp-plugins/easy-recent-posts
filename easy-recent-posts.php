@@ -78,9 +78,9 @@ class thisismyurl_recent_posts_widget extends WP_Widget
 	
 	
 	function thisismyurl_recent_posts_widget(){
-		$widget_ops = array('classname' => 'widget_thisismyurl_recent_posts', 'description' => __( "A WordPress widget to add recent posts to any WordPress theme.") );
+		$widget_ops = array('classname' => 'widget_thisismyurl_recent_posts', 'description' => __( "A WordPress widget to add recent posts to any WordPress theme. Learn more at http://thisismyurl.com") );
 		$control_ops = array('width' => 300, 'height' => 300);
-		$this->WP_Widget('thisismyurl_recent_posts_widget', __('Recent Posts by Christopher Ross'), $widget_ops, $control_ops);
+		$this->WP_Widget('thisismyurl_recent_posts_widget', __('Easy Recent Posts'), $widget_ops, $control_ops);
 	}
 
 	function update($new_instance, $old_instance){
@@ -155,7 +155,7 @@ class thisismyurl_recent_posts_widget extends WP_Widget
 	/*  Displays the Widget */
 	function widget($args, $instance){
 		extract( $args );
-		$instance = wp_parse_args( (array) $instance, array('title'=>'Recent Posts', 'count'=>'5', 'order'=>'desc', 'link'=>'true') );
+		$instance = wp_parse_args( (array) $instance, array('title'=>'Recent Posts', 'count'=>'5', 'order'=>'desc', 'link'=>'true', 'excerpt'=>'false', 'featureimage'=>'false') );
 
 		# Before the widget
 		echo $before_widget;
