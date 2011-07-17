@@ -6,7 +6,7 @@ Description: An easy to use WordPress function to add Recent Posts to any theme.
 Author: Christopher Ross
 Tags: future, upcoming posts, upcoming post, upcoming, draft, Post, recent, preview, plugin, post, posts
 Author URI: http://thisismyurl.com
-Version: 2.0.1
+Version: 2.0.2
 */
 
 
@@ -52,17 +52,20 @@ function thisismyurl_easy_recent_posts($options = '' ) {
 	
     foreach ( $recent_posts as $post ) {
 		$recent .=  $ns_options['before'];
+		
+		$thepost = get_post( $post->ID );
+		
 		if ($ns_options['link'] == 'true') {
-			$recent .= "<a href='".get_permalink($post->ID)."' ";
+			$recent .= "<a href='".get_permalink($thepost->ID)."' ";
 			if ($ns_options['nofollow'] == 'true') {$recent .= 'nofollow';}
 			$recent .= ">";
 		}
-		$recent .=  "<span class='title'>".get_the_title($post->ID)."</title>";
+		$recent .=  "<span class='title'>".get_the_title($thepost->ID)."</title>";
 		if ($ns_options['link'] == 'true') {$recent .= "</a>";}
 		if ($ns_options['featureimage'] == 'true') {
-			if (has_post_thumbnail($post->ID)) {$recent .=  "<div class='thumbnail'>".get_the_post_thumbnail($post->ID,'thumbnail')."</div>";}
+			if (has_post_thumbnail($thepost->ID)) {$recent .=  "<div class='thumbnail'>".get_the_post_thumbnail($thepost->ID,'thumbnail')."</div>";}
 		}
-		if ($ns_options['excerpt'] == 'true') {$recent .=  "<div class='excerpt'>".get_the_excerpt($post->ID)."</div>";}
+		if ($ns_options['excerpt'] == 'true') {$recent .=  "<div class='excerpt'>".$thepost->post_excerpt."</div>";}
 		$recent .=  $ns_options['after'];
     }
 	
