@@ -6,7 +6,7 @@ Description: An easy to use WordPress function to add Recent Posts to any theme.
 Author: Christopher Ross
 Tags: future, upcoming posts, upcoming post, upcoming, draft, Post, recent, preview, plugin, post, posts
 Author URI: http://thisismyurl.com
-Version: 2.0.2
+Version: 2.1.2
 */
 
 
@@ -39,6 +39,7 @@ function thisismyurl_easy_recent_posts($options = '' ) {
 		"nofollow" => false,
 		"excerpt" => false,
 		"featureimage" => false,
+		"creditlink" => false,
 		"show"     => true
 	);
 
@@ -68,7 +69,10 @@ function thisismyurl_easy_recent_posts($options = '' ) {
 		if ($ns_options['excerpt'] == 'true') {$recent .=  "<div class='excerpt'>".$thepost->post_excerpt."</div>";}
 		$recent .=  $ns_options['after'];
     }
-	
+
+	if ($ns_options['creditlink'] == 'true') {
+		$recent .=  $ns_options['before']."<a class='creditlink' href='http://thisismyurl.com/downloads/wordpress/plugins/easy-recent-posts/'>Easy Recent Posts WordPress Plugin</a>".$ns_options['after'];	
+	}
 	if ( $ns_options['show'] ) {
 		echo $recent;
 	} else {
@@ -94,12 +98,13 @@ class thisismyurl_recent_posts_widget extends WP_Widget
 		$instance['link'] = strip_tags(stripslashes($new_instance['link']));
 		$instance['excerpt'] = strip_tags(stripslashes($new_instance['excerpt']));
 		$instance['featureimage'] = strip_tags(stripslashes($new_instance['featureimage']));
+		$instance['creditlink'] = strip_tags(stripslashes($new_instance['creditlink']));
 
 		return $instance;
 	}
 
 	function form($instance){
-		$instance = wp_parse_args( (array) $instance, array('title'=>'Recent Posts', 'count'=>'5', 'order'=>'desc', 'link'=>'true', 'excerpt'=>'false', 'featureimage'=>'false') );
+		$instance = wp_parse_args( (array) $instance, array('title'=>'Recent Posts', 'count'=>'5', 'order'=>'desc', 'link'=>'true', 'excerpt'=>'false', 'featureimage'=>'false', 'creditlink'=>'false') );
 
 		$title = htmlspecialchars($instance['title']);
 		$count = htmlspecialchars($instance['count']);
@@ -107,6 +112,7 @@ class thisismyurl_recent_posts_widget extends WP_Widget
 		$link = htmlspecialchars($instance['link']);
 		$excerpt = htmlspecialchars($instance['excerpt']);
 		$featureimage = htmlspecialchars($instance['featureimage']);
+		$creditlink = htmlspecialchars($instance['creditlink']);
 
 		for ($i = 5; $i <= 25; $i=$i+5) {
 			$countoption .= "<option value='$i' ";
@@ -127,7 +133,9 @@ class thisismyurl_recent_posts_widget extends WP_Widget
 		if ($featureimage == "true") {$featureimageoption .= "<option value='true' selected >Yes</option>";} else {$featureimageoption .= "<option value='true'>Yes</option>";}
 		if ($featureimage == "false") {$featureimageoption .= "<option value='false' selected >No</option>";} else {$featureimageoption .= "<option value='false'>No</option>";}
 
-	
+		if ($creditlink == "true") {$creditlinkoption .= "<option value='true' selected >Yes</option>";} else {$creditlinkoption .= "<option value='true'>Yes</option>";}
+		if ($creditlink == "false") {$creditlinkoption .= "<option value='false' selected >No</option>";} else {$creditlinkoption .= "<option value='false'>No</option>";}
+
 		# Output the options
 		echo '	<p style="text-align:left;"><label for="' . $this->get_field_name('title') . '">' . __('Title:') . '</label><br />
 				<input style="width: 300px;" id="' . $this->get_field_id('title') . '" name="' . $this->get_field_name('title') . '" type="text" value="' . $title . '" />
@@ -151,19 +159,21 @@ class thisismyurl_recent_posts_widget extends WP_Widget
 		echo '	<p style="text-align:left;"><label for="' . $this->get_field_name('featureimage') . '">' . __('Include Thumbnail?') . '</label><br />
 				<select id="' . $this->get_field_id('featureimage') . '" name="' . $this->get_field_name('featureimage') . '">'.$featureimageoption.'</select>
 				</p>';
-
+		echo '	<p style="text-align:left;"><label for="' . $this->get_field_name('creditlink') . '">' . __('Include Credit Link?') . '</label><br />
+				<select id="' . $this->get_field_id('creditlink') . '" name="' . $this->get_field_name('creditlink') . '">'.$creditlinkoption.'</select>
+				</p>';
 	}
 
 
 	/*  Displays the Widget */
 	function widget($args, $instance){
 		extract( $args );
-		$instance = wp_parse_args( (array) $instance, array('title'=>'Recent Posts', 'count'=>'5', 'order'=>'desc', 'link'=>'true', 'excerpt'=>'false', 'featureimage'=>'false') );
+		$instance = wp_parse_args( (array) $instance, array('title'=>'Recent Posts', 'count'=>'5', 'order'=>'desc', 'link'=>'true', 'excerpt'=>'false', 'featureimage'=>'false', 'creditlink'=>'false') );
 
 		# Before the widget
 		echo $before_widget;
 		echo '<h3 class="widgettitle">'.$instance['title'].'</h3>';
-		echo '<ul>'.thisismyurl_easy_recent_posts('show=0&link='.$instance['link'].'&count='.$instance['count'].'&order='.$instance['order'].'&excerpt='.$instance['excerpt'].'&featureimage='.$instance['featureimage']).'</ul>';
+		echo '<ul>'.thisismyurl_easy_recent_posts('show=0&link='.$instance['link'].'&count='.$instance['count'].'&order='.$instance['order'].'&excerpt='.$instance['excerpt'].'&featureimage='.$instance['featureimage'].'&creditlink='.$instance['creditlink']).'</ul>';
 		echo $after_widget;
 
 	}
