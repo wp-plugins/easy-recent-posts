@@ -1,19 +1,22 @@
 === Plugin Name ===
 Contributors: christopherross
-Plugin URI: http://thisismyurl.com/downloads/wordpress/plugins/easy-recent-posts/
+Plugin URI: http://thisismyurl.com/plugins/easy-recent-posts/
 Tags: recent posts, best, post-plugins, recent, posts,comments, most recent, sidebar, widget, theme, php, code, plugin, post, posts
 Donate link:  http://thisismyurl.com/
 Requires at least: 3.0.0
-Tested up to: 3.2
+Tested up to: 3.5.1
 Stable tag: 2.1.2
 
-An easy to use WordPress function to <a href='http://thisismyurl.com/downloads/wordpress/plugins/easy-recent-posts/'>add recent posts to any WordPress theme</a>.
+An easy to use WordPress function to <a href='http://thisismyurl.com/plugins/easy-recent-posts/'>add recent posts to any WordPress theme</a>.
 
 == Description ==
 
-An easy to use WordPress function to <a href='http://thisismyurl.com/downloads/wordpress/plugins/easy-recent-posts/'>add recent posts to any WordPress theme</a>.
+An easy to use WordPress function to <a href='http://thisismyurl.com/plugins/easy-recent-posts/'>add recent posts to any WordPress theme</a>.
 
 You can also include the the list in a post using a shortcode [thisismyurl_easy_recent_posts] or as a widget.
+
+This plugin is maintained by Christopher Ross, http://thisismyurl.com or you can find him on Twitter at http://twitter.com/thisismyurl/
+
 
 == Installation ==
 
